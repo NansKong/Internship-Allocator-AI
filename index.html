@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AllocateAI · Allocation Studio</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0c1018;color:#f3f6ff;font:15px system-ui,sans-serif}header,main{max-width:1160px;margin:auto;padding:22px 26px}header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #273144}header b{font-size:20px}small,.eyebrow{color:#9daed0;letter-spacing:.14em;text-transform:uppercase;font-size:11px;font-weight:700}.mark{color:#8ff0cc;margin-right:9px}.hero{padding:48px 34px;margin:10px 0 24px;border:1px solid #29384d;border-radius:22px;background:radial-gradient(ellipse at 87% 0%,#164943,transparent 66%),repeating-linear-gradient(90deg,transparent 0 39px,#ffffff0a 39px 40px),#121b2b}h1{font-size:clamp(34px,6vw,66px);letter-spacing:-.065em;margin:8px 0;line-height:1.03}p{color:#acbbd3;line-height:1.6}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}section.panel{min-width:0;background:#121925;border:1px solid #283247;border-radius:18px;padding:23px}h2{margin:7px 0 10px;font-size:24px}textarea{width:100%;height:280px;background:#0b111c;color:#d9e8ff;border:1px solid #35425b;border-radius:12px;padding:14px;font:13px/1.55 monospace;resize:vertical}button{font:inherit;font-weight:700;border:1px solid #384760;border-radius:9px;padding:10px 14px;color:#e3ecff;background:#202b3d;cursor:pointer}button.primary{background:#96f3d2;color:#09241b;border-color:#96f3d2}button:disabled{opacity:.5}button:focus-visible,textarea:focus-visible{outline:2px solid #96f3d2;outline-offset:3px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.status{color:#96f3d2;font-weight:700;overflow-wrap:anywhere}table{width:100%;border-collapse:collapse;text-align:left;overflow-wrap:anywhere}td,th{padding:12px 8px;border-bottom:1px solid #293549}th{color:#acbbd3;font-size:12px}footer{margin:24px 0;color:#9daed0;font-size:12px}@media(max-width:750px){.grid{grid-template-columns:1fr}.hero{padding:32px 20px}header,main{padding:16px}}
+</style>
+<header><b><span class="mark" aria-hidden="true">◈</span>AllocateAI</b><small>Local prototype</small></header>
+<main>
+<section class="hero"><span class="eyebrow">Internship allocation workspace</span><h1>Allocation Studio</h1><p>Test internship assignments against seat capacities and minimum group quotas.<br>Fill as many eligible seats as possible, then maximize suitability.</p></section>
+<div class="grid">
+<section class="panel"><span class="eyebrow">01 / Scenario</span><h2><label for="scenario">Configure a run</label></h2><p>Start with the synthetic example or edit the JSON with your own pre-screened matches and integer scores.</p>
+<textarea id="scenario" spellcheck="false"></textarea><div class="actions"><button type="button" id="run" class="primary">Run allocation</button><button type="button" id="sample">Load example</button></div></section>
+<section class="panel"><span class="eyebrow">02 / Results</span><h2>Assignment results</h2><p id="status" class="status" role="status">Ready to run</p><table hidden><thead><tr><th scope="col">Candidate</th><th scope="col">Opportunity</th></tr></thead><tbody></tbody></table></section>
+</div><footer>Simulation workspace · OR-Tools CP-SAT</footer>
+</main>
+<script>
+const scenario = document.querySelector('#scenario');
+const run = document.querySelector('#run');
+const sample = document.querySelector('#sample');
+const statusLine = document.querySelector('#status');
+const table = document.querySelector('table');
+const rows = table.tBodies[0];
+
+async function loadExample() {
+  sample.disabled = run.disabled = true;
+  try {
+    const response = await fetch('/example.json');
+    if (!response.ok) throw Error('Could not load the example.');
+    scenario.value = JSON.stringify(await response.json(), null, 2);
+  } catch (error) {
+    statusLine.textContent = error.message;
+  } finally {
+    sample.disabled = run.disabled = false;
+  }
+}
+sample.addEventListener('click', loadExample);
+run.addEventListener('click', async () => {
+  run.disabled = sample.disabled = true;
+  table.hidden = true;
+  rows.replaceChildren();
+  statusLine.textContent = 'Solving scenario…';
+  try {
+    const payload = JSON.parse(scenario.value);
+    const response = await fetch('/api/allocate', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const result = await response.json();
+    if (!response.ok) throw Error(result.error || 'Allocation failed.');
+    statusLine.textContent = result.status === 'INFEASIBLE'
+      ? 'Infeasible · The scenario cannot satisfy all constraints.'
+      : result.status + ' · ' + result.assignments.length + ' placements';
+    for (const assignment of result.assignments) {
+      const row = rows.insertRow();
+      row.insertCell().textContent = assignment.candidate;
+      row.insertCell().textContent = assignment.opportunity;
+    }
+    table.hidden = !rows.rows.length;
+  } catch (error) {
+    statusLine.textContent = error.message;
+  } finally {
+    run.disabled = sample.disabled = false;
+  }
+});
+loadExample();
+</script>
+</html>

@@ -1,0 +1,9 @@
+{
+  "capacities": {"engineering": 1, "operations": 1},
+  "eligible_matches": [
+    {"candidate": "A", "opportunity": "engineering", "score": 30000, "groups": []},
+    {"candidate": "A", "opportunity": "operations", "score": 1, "groups": []},
+    {"candidate": "B", "opportunity": "engineering", "score": 1, "groups": ["rural"]}
+  ],
+  "minimums": {"rural": 1}
+}
