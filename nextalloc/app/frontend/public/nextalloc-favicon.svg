@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>NextAlloc</title>
+  <rect width="64" height="64" rx="14" fill="#fffafa"/>
+  <g fill="none" stroke="#ff456d" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M23 15V9h18v6"/>
+    <path d="M22 51H11a4 4 0 0 1-4-4V23a4 4 0 0 1 4-4h42a4 4 0 0 1 4 4v9"/>
+    <path d="M7 28a6 6 0 0 0 6 6h13m12 0h13a6 6 0 0 0 6-6"/>
+    <rect x="27" y="30" width="10" height="9" rx="2"/>
+    <path d="M28 55h29M32 54v-5m10 5V43m10 11V36M29 44l9-7 7 3 11-12m-8 0h8v8"/>
+  </g>
+</svg>

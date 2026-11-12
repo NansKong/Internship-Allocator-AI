@@ -8,3 +8,10 @@ data/
 !.env.example
 *.log
 *.pyc
+
+# Local-only tooling and runtime files in imported demos
+.local-tools/
+.local-logs/
+.pytest_cache/
+nextalloc/app/backend/target/
+nextalloc/app/frontend/dist/
