@@ -13,3 +13,7 @@ Local changes include the shared navigation, sign-in experience, administrator o
 The Docker backend artifact copy now matches Maven's `nextalloc-backend.jar` output. Docker execution has not been verified on this workstation.
 
 Runtime logs, uploaded documents, databases, environments, installed dependencies, local toolchains, and Git metadata are excluded from this snapshot.
+
+The public landing hero uses an original HTML/CSS illustration and existing Lucide icons. Reference patterns were reviewed from the user-specified collections, including [Aceternity two-column heroes](https://ui.aceternity.com/blocks/hero-sections/two-column-with-image), [21st Folio](https://21st.dev/@ruixen.ui/templates/folio-open-source-data-intelligence-landing-template), and [Curated Subframe](https://curated.design/sites/s/190825/). No template code, paid assets, or external fonts were copied.
+
+The displayed SVG mark and favicon use a sage background and forest-green strokes to match the interface. The supplied original pink wordmark remains preserved as a source asset.

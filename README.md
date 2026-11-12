@@ -14,11 +14,15 @@ These applications remain separate. The NextAlloc redesign does not migrate its 
 ## Latest UI update
 
 - Shared floating navigation with grouped administrator menus, contextual route descriptions, account controls, and mobile navigation.
-- Role selection and sign-in screen.
+- Product landing hero with an illustrated profile-to-placement journey, working demo/sign-in links, and a three-step explanation before role selection.
 - Administrator allocation overview with policy controls.
 - Organisation dashboard with capacity, candidate demand and allocation impact, plus searchable opening cards and opportunity/offer controls.
 - Candidate dashboard with readiness, allocation, offers and recommendations; discovery filter rail; fit studio; profile section shortcuts and labelled form fields.
-- A compact SVG favicon adapted from the supplied NextAlloc briefcase-and-growth logo. The original wordmark is included in the frontend's public assets.
+- A compact SVG logo and favicon adapted from the supplied NextAlloc briefcase-and-growth artwork, in sage and forest green to match the interface. The original wordmark is included in the frontend's public assets.
+
+### Product landing page
+
+![NextAlloc landing hero](docs/screenshots/nextalloc-hero-desktop.png)
 
 ### Candidate workspace
 

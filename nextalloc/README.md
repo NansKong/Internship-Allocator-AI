@@ -2,6 +2,8 @@
 
 This is the current three-role demonstration, adapted from the teammate project. See [source and license attribution](SOURCE.md).
 
+The public opening page introduces the product with a split hero, an illustrative allocation journey, and a three-step explanation. The demo and sign-in links lead to the existing role selector and login form.
+
 ## Workspaces
 
 | Role | Pages and workflows |
